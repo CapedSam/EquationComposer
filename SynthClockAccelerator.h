@@ -1,21 +1,21 @@
 // =============================================================================
 //
-// Name: SynthLooper
+// Name: SynthClockAccelerator
 // Type: Audio
 // Written by: Bret Truchan, 2014
 // 
 //
 // =============================================================================
 
-#ifndef SynthLooper_h
-#define SynthLooper_h
+#ifndef SynthClockAccelerator_h
+#define SynthClockAccelerator_h
 
 #include "Synth.h"
 
-class SynthLooper : public Synth
+class SynthClockAccelerator : public Synth
 {
   public:
-    SynthLooper(Inputs *inputs); 
+    SynthClockAccelerator(Inputs *inputs); 
 };
 
 #endif

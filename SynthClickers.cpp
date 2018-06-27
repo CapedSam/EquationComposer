@@ -13,7 +13,7 @@ SynthClickers::SynthClickers(Inputs* inputs)
 
 	ext_clock->clock_input = inputs->gate;
 
-	// Read parameter 3 and scale it between 0 - 5
+	// Read parameter 3 and scale it between 0 - 8
 	map_0_8->input = inputs->param3;
 
 	// Generate an LFO and scale the output to 0 - 24

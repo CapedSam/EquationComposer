@@ -88,7 +88,8 @@ class ModuleSamplePlayer : public Module
     Module *sample_rate_input;    
     
   private:
-    boolean triggered;
+    boolean last_state;
+	boolean rising_edge;
     boolean playing;
     
     uint32_t t;  // Accumulator used in equations 

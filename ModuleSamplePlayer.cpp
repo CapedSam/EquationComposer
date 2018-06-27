@@ -9,7 +9,7 @@ ModuleSamplePlayer::ModuleSamplePlayer()
   t = 0;  // Sample index
   w = 0;  // Final output
   fixed_point_20_12_index = 0;
-  triggered = false; 
+  last_state = true;
 
   // Initialize all inputs
   this->sample_selection_input = NULL;  
@@ -22,21 +22,47 @@ uint16_t ModuleSamplePlayer::compute()
 
   // Read inputs
   uint16_t sample_selection = this->readInput(sample_selection_input, 0, 8);
+  //Serial.println("*****Test Start.");
   uint16_t trigger = this->readInput(trigger_input);
+  //Serial.print("TRIGGER VALUE: ");
+  //Serial.print(trigger);
   uint16_t frequency = this->readInput(sample_rate_input) << 2;
   
-  if((trigger >= MID_CV) && !triggered) 
-  {
-    triggered = true;
-    playing = true;
-    fixed_point_20_12_index = 0;
-  }
+
   
-  if((trigger < MID_CV) && triggered) 
+  if(trigger < MID_CV) 
   {
-    triggered = false;
+	  rising_edge = false;
+	  last_state = false;
+	  //Serial.println("getting low signal now.");
   }
-  
+  else
+  {
+	  if (last_state)
+	  {
+		  rising_edge = false;
+	  }
+	  else
+	  {
+		  rising_edge = true;
+	  }
+	  last_state = true;
+	  //Serial.print("Banging, are we? Well rising edge = ");
+	  //Serial.println(rising_edge);
+  }
+  if (!rising_edge)
+  {
+	  fixed_point_20_12_index += frequency;
+  }
+  else
+  {
+	  last_state = true;
+	  playing = true;
+	  fixed_point_20_12_index = 0;
+	  t = fixed_point_20_12_index >> 12;
+  }
+
+
   if(playing)
   {
     // shift off th 12 bits used for fractional numbers, which leaves us with a 20 bit number
@@ -140,10 +166,7 @@ uint16_t ModuleSamplePlayer::compute()
           stop_playback();
         }
         break;
-
     }
-
-    fixed_point_20_12_index += frequency;
   }
 
   return(w);

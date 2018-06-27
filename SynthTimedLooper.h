@@ -1,21 +1,21 @@
 // =============================================================================
 //
-// Name: SynthLooper
+// Name: SynthTimedLooper
 // Type: Audio
 // Written by: Bret Truchan, 2014
 // 
 //
 // =============================================================================
 
-#ifndef SynthLooper_h
-#define SynthLooper_h
+#ifndef SynthTimedLooper_h
+#define SynthTimedLooper_h
 
 #include "Synth.h"
 
-class SynthLooper : public Synth
+class SynthTimedLooper : public Synth
 {
   public:
-    SynthLooper(Inputs *inputs); 
+    SynthTimedLooper(Inputs *inputs); 
 };
 
 #endif
