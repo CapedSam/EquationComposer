@@ -22,26 +22,31 @@ uint16_t ModuleLooper::compute()
 {
 
   // Read inputs
-  uint16_t sample = this->readInput(sample_input, 0,4);  // the range here needs to match the number of samples in the forthcoming switch statement.
+  uint16_t sample = this->readInput(sample_input, 0,4);
   uint16_t trigger = this->readInput(trigger_input);
   uint16_t frequency = this->readInput(sample_rate_input) << 1;
   uint16_t slice = this->readInput(slice_input, CONVERT_TO_4_BIT); // ranges from 0 to 16
   uint16_t sample_length;
   
   // Select sample
+
+  //Serial.print("Normal Looper:  ");
+	//  Serial.print("frequency = ");
+  //Serial.printin(frequency);
+
   switch (round(sample) - 1)
-  {// the number of elements here needs to match the max value in the line above "this->readInput(sample_input, 0, XXX)"
+  {
     case 0:
-		sample_length = DEVINE_BEAT2_MOD_LENGTH;
+		sample_length = CUSTOM_LOOP_1_LENGTH;
 		break;
     case 1:
-		sample_length = SOD_LOOP1_LENGTH;
+		sample_length = CUSTOM_LOOP_2_LENGTH;
 		break;
 	case 2:
-		sample_length = SOD_LOOP2_LENGTH;
+		sample_length = CUSTOM_LOOP_3_LENGTH;
 		break;
 	case 3:
-		sample_length = SOD_LOOP3_LENGTH;
+		sample_length = CUSTOM_LOOP_4_LENGTH;
 		break;
   }
 
@@ -69,20 +74,21 @@ uint16_t ModuleLooper::compute()
   }
 
   switch(sample)
-  {// same requirement for this switch statement as the one above.
+  {
     case 0:
-		w = DEVINE_BEAT2_MOD[t];
+		w = CUSTOM_LOOP_1[t];
       break;
 
 	case 1:
-		w = SOD_LOOP1[t];
+		w = CUSTOM_LOOP_2[t];
 		break;
+
 	case 2:
-		w = SOD_LOOP2[t];
+		w = CUSTOM_LOOP_3[t];
 		break;
 
 	case 3:
-		w = SOD_LOOP3[t];
+		w = CUSTOM_LOOP_4[t];
 		break;
   }
   

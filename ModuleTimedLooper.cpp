@@ -34,20 +34,20 @@ uint16_t ModuleTimedLooper::compute()
   switch(round(sample)-1)
   {
     case 0:
-		sample_length = DEVINE_BEAT2_MOD_LENGTH;
-		loop_length = 22;
+		sample_length = CUSTOM_LOOP_1_LENGTH;
+		loop_length = 16;
 		break;
     case 1:
-		sample_length = SOD_LOOP1_LENGTH;
-		loop_length = 22;
+		sample_length = CUSTOM_LOOP_2_LENGTH;
+		loop_length = 16;
 		break;
 	case 2:
-		sample_length = SOD_LOOP2_LENGTH;
-		loop_length = 22;
+		sample_length = CUSTOM_LOOP_3_LENGTH;
+		loop_length = 16;
 		break;
 	case 3:
-		sample_length = SOD_LOOP3_LENGTH;
-		loop_length = 22;
+		sample_length = CUSTOM_LOOP_4_LENGTH;
+		loop_length = 16;
 		break;
   }
 
@@ -65,7 +65,7 @@ uint16_t ModuleTimedLooper::compute()
 //Serial.println(frequency);
 
   // Adjust the slice based on the number of eighth notes in the particular sample.
-  uint16_t slice = this->readInput(slice_input, 1, 18); 
+  uint16_t slice = this->readInput(slice_input, 1, loop_length); 
 
 
   // Handle trigger events
@@ -92,22 +92,23 @@ uint16_t ModuleTimedLooper::compute()
 	  fixed_point_20_12_index = t << 12;
   }
 
-  switch(sample)
+  switch (sample)
   {
-    case 0:
-		w = DEVINE_BEAT2_MOD[t];
-      break;
+  case 0:
+	  w = CUSTOM_LOOP_1[t];
+	  break;
 
-	case 1:
-		w = SOD_LOOP1[t];
-		break;
-	case 2:
-		w = SOD_LOOP2[t];
-		break;
+  case 1:
+	  w = CUSTOM_LOOP_2[t];
+	  break;
 
-	case 3:
-		w = SOD_LOOP3[t];
-		break;
+  case 2:
+	  w = CUSTOM_LOOP_3[t];
+	  break;
+
+  case 3:
+	  w = CUSTOM_LOOP_4[t];
+	  break;
   }
   
 

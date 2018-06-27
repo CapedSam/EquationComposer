@@ -15,6 +15,17 @@
 #define SOD_LOOP2_LENGTH 64969
 #define SOD_LOOP3_LENGTH 64969
 
+// making generic loop names so that swapping is trivial
+#define CUSTOM_LOOP_1_LENGTH 58800
+#define CUSTOM_LOOP_2_LENGTH 58800
+#define CUSTOM_LOOP_3_LENGTH 58800
+#define CUSTOM_LOOP_4_LENGTH 58800
+extern const uint8_t CUSTOM_LOOP_1[];
+extern const uint8_t CUSTOM_LOOP_2[];
+extern const uint8_t CUSTOM_LOOP_3[];
+extern const uint8_t CUSTOM_LOOP_4[];
+
+
 #define TRUCHAN_BEAT1_LENGTH 36873
 
 extern const uint8_t DEVINE_BEAT1[]; 
