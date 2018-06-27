@@ -22,58 +22,68 @@ uint16_t ModuleLooper::compute()
 {
 
   // Read inputs
-  uint16_t sample = this->readInput(sample_input, CONVERT_TO_1_BIT);
+  uint16_t sample = this->readInput(sample_input, 0,4);  // the range here needs to match the number of samples in the forthcoming switch statement.
   uint16_t trigger = this->readInput(trigger_input);
   uint16_t frequency = this->readInput(sample_rate_input) << 1;
   uint16_t slice = this->readInput(slice_input, CONVERT_TO_4_BIT); // ranges from 0 to 16
-
   uint16_t sample_length;
-
+  
   // Select sample
-
-  switch(sample)
-  {
+  switch (round(sample) - 1)
+  {// the number of elements here needs to match the max value in the line above "this->readInput(sample_input, 0, XXX)"
     case 0:
-      sample_length = DEVINE_BEAT1_LENGTH;
-      break;
-
+		sample_length = DEVINE_BEAT2_MOD_LENGTH;
+		break;
     case 1:
-      sample_length = DEVINE_BEAT2_LENGTH;
-      break;
+		sample_length = SOD_LOOP1_LENGTH;
+		break;
+	case 2:
+		sample_length = SOD_LOOP2_LENGTH;
+		break;
+	case 3:
+		sample_length = SOD_LOOP3_LENGTH;
+		break;
   }
 
   // Handle trigger events
 
-  if((trigger >= MID_CV) && !triggered) 
+  if ((trigger >= MID_CV) && !triggered)
   {
-    triggered = true;
-    fixed_point_20_12_index = (slice * (sample_length/16)) << 12;
+	  triggered = true;
+	  fixed_point_20_12_index = (slice * (sample_length / 16)) << 12;
   }
 
-  if((trigger < MID_CV) && triggered) 
+  if ((trigger < MID_CV) && triggered)
   {
-    triggered = false;
+	  triggered = false;
   }
 
   // Playback selected sample
 
-  t = fixed_point_20_12_index >> 12; 
+  t = fixed_point_20_12_index >> 12;
 
-  if(t >= sample_length) 
+  if (t >= sample_length)
   {
-    t = t - sample_length;
-    fixed_point_20_12_index = t << 12;
+	  t = t - sample_length;
+	  fixed_point_20_12_index = t << 12;
   }
 
   switch(sample)
-  {
+  {// same requirement for this switch statement as the one above.
     case 0:
-      w = DEVINE_BEAT1[t];
+		w = DEVINE_BEAT2_MOD[t];
       break;
 
-    case 1:
-      w = DEVINE_BEAT2[t];
-      break;
+	case 1:
+		w = SOD_LOOP1[t];
+		break;
+	case 2:
+		w = SOD_LOOP2[t];
+		break;
+
+	case 3:
+		w = SOD_LOOP3[t];
+		break;
   }
   
 

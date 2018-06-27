@@ -106,7 +106,7 @@ uint16_t ModuleEqDrum::compute()
         w = ((8999&t%(t&11))/(t>>8))<<6;
         break;
 
-      case 13: // vinal pop
+      case 13: // vinyl pop
         w = ((28959^(t>>2)%(t%230))/(t>>3))<<2;
         break;
 

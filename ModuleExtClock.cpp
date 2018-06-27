@@ -10,7 +10,7 @@ ModuleExtClock::ModuleExtClock(uint8_t bpm, uint16_t clock_division)
   // 'ext_clocked' records the status (on or off) of the external clock input
   this->ext_clocked = false;
 
-  // 'ext_clock_count' helps determine which clock mode to use: internal or external.
+  // 'ext_clock_counter' helps determine which clock mode to use: internal or external.
   // Defaults to internal.  This counter is incremented whenever there is NO external
   // clock detected.  Once this counter reaches a certain level, it's assumed that
   // there is no external clock, and the internal clock is used.  
@@ -33,10 +33,12 @@ ModuleExtClock::ModuleExtClock(uint8_t bpm)
   this->ext_clock_counter = 88400;
   this->bpm = min(bpm, 254);
 
+  // Creating an array which contains the number of samples per pulse for each
+  // associated bpm value from 0 to 254.
   for(uint8_t bpm_i=0; bpm_i < 255; bpm_i++)
   {
     bpm_ppqn[bpm_i] = ((float)(60.0 * SAMPLE_RATE_FLOAT)/((float)bpm_i * 96.0));
-    bpm_half_ppqn[bpm_i] = bpm_ppqn[bpm_i] >> 1; // divide by 2
+    bpm_half_ppqn[bpm_i] = bpm_ppqn[bpm_i] >> 1; // divide by 2 for #samples for 50% duty cycle
   }  
 }
 
@@ -67,6 +69,9 @@ uint16_t ModuleExtClock::compute()
 
     // Avoid overflow of ext_clock_counter
     ext_clock_counter = 88400;
+
+	//   Now that we've determined that we're using an internal clock,
+	//   let's generate the appropriate clock signal.
 
     //   If we're at the end of the clock duty,
     //   then reset the counter back to 0 and return 0  

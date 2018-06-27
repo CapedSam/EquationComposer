@@ -2,8 +2,10 @@
  *  +------------------------+
  *  | ModuleLooper           |
  *  |------------------------|
- *  > trigger_input          |
+ *  > sample_input           |
  *  > sample_rate_input      |
+ *  > slice_input            |
+ *  > trigger_input          |
  *  |                 output >
  *  +------------------------+
  *

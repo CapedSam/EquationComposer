@@ -59,7 +59,7 @@ TODO:
 //
 // Don't ever set these to '0'.  Instead, comment them out.
 //
-// #define DEBUG 1
+//#define DEBUG 1
 
 // Include all of the equation banks
 #include "EquationBankKhepri.h"
@@ -75,6 +75,7 @@ TODO:
 #include "SynthAutoDrum.h"
 #include "SynthChords.h"
 #include "SynthClickers.h"
+#include "SynthClockAccelerator.h"
 #include "SynthDrumPlayer.h"
 #include "SynthDrumSelektor.h"
 #include "SynthEquationPlayer.h"
@@ -83,6 +84,7 @@ TODO:
 #include "SynthMini.h"
 #include "SynthMumbler.h"
 #include "SynthPatterns.h"
+#include "SynthTimedLooper.h"
 #include "SynthWavetable.h"
 #include "SynthWavetableFolder.h"
 #include "SynthWavetableDelay.h"
@@ -108,7 +110,7 @@ EquationBankSobek *equation_bank_sobek = new EquationBankSobek();
 // Instantiate synths, which are selectable via the PRG knob.
 // Any new synth must be added to this list
 
-#define NUMBER_OF_SYNTHS 10
+#define NUMBER_OF_SYNTHS 11
 
 Synth *active_synths[] {
   new SynthEquationPlayer(inputs, equation_bank_khepri),
@@ -120,8 +122,13 @@ Synth *active_synths[] {
   new SynthChords(inputs),
   new Synth3Osc(inputs),
   new SynthDrumPlayer(inputs),
-  new SynthLooper(inputs)
+  new SynthLooper(inputs),
+  new SynthTimedLooper(inputs),
+  };
+  /*
+  new SynthClockAccelerator(inputs)
 };
+*/
 
 
 // The 'cycle' variable increments every time the interrupt is called.
